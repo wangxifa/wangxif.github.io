@@ -283,6 +283,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/todolist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/11.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="you and me">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/13/todolist/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-13T19:57:44+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="微信小程序的学习"><a href="#微信小程序的学习" class="headerlink" title="微信小程序的学习"></a>微信小程序的学习</h1><h2 id="微信小程序的开始尝试-TodoList"><a href="#微信小程序的开始尝试-TodoList" class="headerlink" title="微信小程序的开始尝试 TodoList"></a>微信小程序的开始尝试 TodoList</h2><hr>
+<h3 id="微信开发者工具生成-目录如下："><a href="#微信开发者工具生成-目录如下：" class="headerlink" title="微信开发者工具生成 目录如下："></a>微信开发者工具生成 目录如下：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">|-- app.js</span><br><span class="line">|-- app.json</span><br><span class="line">|-- app.wxss</span><br><span class="line">|-- pages     </span><br><span class="line">|   |-- index   # 主页</span><br><span class="line">|   |   |-- index.js</span><br><span class="line">|   |   |-- index.json</span><br><span class="line">|   |   |-- index.wxml</span><br><span class="line">|   |   `-- index.wxss</span><br><span class="line">|   `-- log # 日志页面</span><br><span class="line">|   |   |-- log.js</span><br><span class="line">|   |   |-- log.json</span><br><span class="line">|   |   |-- log.wxml</span><br><span class="line">|   |   `-- log.wxss</span><br><span class="line">`-- utils       # 工具</span><br><span class="line">    `-- util.js</span><br></pre></td></tr></table></figure>
+<p>大体为:<br>每一个page即是一个页面文件 ，每个页面有一个js/wxml/wxss/json文件 规定：<strong>描述页面的这四个文件必须具有相同的路径与文件名。</strong><br><br>全局下同路，为公共的逻辑，样式，配置<br><br>与html不同:用<code>view text navigator</code> 代替 <code>div span a</code><br><a href="https://mp.weixin.qq.com/debug/wxadoc/dev/api/" target="_blank" rel="noopener">官方文档</a><br><br><strong>*.wxml:</strong> 数据驱动的视图层 +  微信提供了大量的组件 表单 导航 媒体 …</p>
+<h2 id="好，那现在正式尝试TodoList"><a href="#好，那现在正式尝试TodoList" class="headerlink" title="好，那现在正式尝试TodoList~"></a>好，那现在正式尝试TodoList~</h2><hr>
+<p>开始完成wxml ,我在这里主要分成三部分  </p>
+<ol>
+<li>titleBar</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;view class=&quot;titleBar&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;status&quot;&gt;</span><br><span class="line">        &lt;!-- wxml 是一个模板 &#123;&#123;数据状态&#125;&#125; 数据的绑定</span><br><span class="line">    动态的 可编译的 活的  data 是活的 setData  只要状态一变 界面立即改变 --&gt;</span><br><span class="line">        &lt;text class=&quot;&#123;&#123;status==&apos;1&apos;?&apos;active&apos;:&apos;&apos;&#125;&#125;&quot; data-status=&quot;1&quot; bindtap=&quot;showStatus&quot;&gt;全部&lt;/text&gt;</span><br><span class="line">        &lt;!--用data- 表示数据属性--&gt;</span><br><span class="line">        &lt;text class=&quot;&#123;&#123;status==&apos;2&apos;?&apos;active&apos;:&apos;&apos;&#125;&#125;&quot; data-status=&quot;2&quot; bindtap=&quot;showStatus&quot;&gt;未完成&lt;/text&gt;</span><br><span class="line">        &lt;text class=&quot;&#123;&#123;status==&apos;3&apos;?&apos;active&apos;:&apos;&apos;&#125;&#125;&quot; data-status=&quot;3&quot; bindtap=&quot;showStatus&quot;&gt;已完成&lt;/text&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;add&quot;&gt;</span><br><span class="line">        &lt;button class=&quot;mini-btn&quot; size=&quot;mini&quot; type=&quot;warn&quot; bindtap=&quot;addTodoShow&quot;&gt;添加&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/view&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>scoll-view</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scoll-view scroll-y class=&quot;lists&quot;</span><br><span class="line">&gt;&lt;scoll-view scroll-y class=&quot;lists&quot;&gt;</span><br><span class="line">        &lt;view class=&quot;item&quot; wx:for=&quot;&#123;&#123;curLists&#125;&#125;&quot; wx:key=&quot;index&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;content&quot;&gt;</span><br><span class="line">                &lt;icon class=&quot;icon-small&quot; bindtap=&quot;changeTodo&quot; data-item=&quot;&#123;&#123;index&#125;&#125;&quot; size=&quot;23&quot; type=&quot;&#123;&#123;item.status ===&apos;1&apos;? &apos;success&apos;:&apos;circle&apos;&#125;&#125;&quot;&gt;&lt;/icon&gt;</span><br><span class="line">                &lt;text class=&quot;title&quot;&gt;&#123;&#123;item.title&#125;&#125;&lt;/text&gt;</span><br><span class="line">                &lt;text class=&quot;time&quot;&gt;&#123;&#123;item.time&#125;&#125;&lt;/text&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">&lt;/scoll-view&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>addForm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&lt;view class=&quot;addForm  &#123;&#123;addShow?&apos;hide&apos;:&apos;&apos;&#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;view class=&quot;addForm-div&quot;&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; placeholder=&quot;请输入任务&quot; class=&quot;weui-input&quot; bindinput=&quot;setInput&quot; value=&quot;&#123;&#123;addText&#125;&#125;&quot; /&gt;</span><br><span class="line">            &lt;view class=&quot;addForm-btn&quot;&gt;</span><br><span class="line">                &lt;button type=&quot;warn&quot; size=&quot;mini&quot; class=&quot;weui-btn mini-btn&quot; bindtap=&quot;addTodo&quot;&gt;确定添加&lt;/button&gt;</span><br><span class="line">                &lt;button type=&quot;default&quot; size=&quot;mini&quot; class=&quot;weui-btn mini-btn&quot; bindtap=&quot;addTodoHide&quot;&gt;取消&lt;/button&gt;</span><br><span class="line">            &lt;/view&gt;</span><br><span class="line">        &lt;/view&gt;</span><br><span class="line">    &lt;/view&gt;</span><br><span class="line">&lt;/view&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p>wxml 是一个模板  数据的绑定<br>        动态的 可编译的 活的  data 是活的 setData  只要状态一变 界面立即改变<br>        我们在这里使用了data 来表示数据属性</p>
+<h2 id="写完了wxml-那让我们加上wxss样式看看效果把"><a href="#写完了wxml-那让我们加上wxss样式看看效果把" class="headerlink" title="写完了wxml 那让我们加上wxss样式看看效果把"></a>写完了wxml 那让我们加上wxss样式看看效果把</h2><p><a href="https://segmentfault.com/n/1330000014840240" target="_blank" rel="noopener">TodoList wxss</a><br></p>
+<p>在wxss中我们使用了弹性布局flex:1, 这种布局的方式使得我们不用计算大小了 </p>
+<h3 id="我们当然不能只做一个切图仔啦"><a href="#我们当然不能只做一个切图仔啦" class="headerlink" title="我们当然不能只做一个切图仔啦"></a>我们当然不能只做一个切图仔啦</h3><hr>
+<p> 话不多说<a href="https://segmentfault.com/n/1330000014840273" target="_blank" rel="noopener">看看js的实现部分</a><br></p>
+<p>  数据 对应着 界面状态</p>
+<pre><code>默认的status是1是全部
+setData改变 比如改成2 setData 2 已完成 3 未完成
+</code></pre><p> 界面状态,全部被data接管起来<br> 当前点击条目的status要变成 success 数据 lists 跟当前条目相关的数据<br> 将status的值 更新为 1</p>
+<hr>
+<h4 id="这样一个简单的TodoList框架就做好了"><a href="#这样一个简单的TodoList框架就做好了" class="headerlink" title="这样一个简单的TodoList框架就做好了"></a>这样一个简单的TodoList框架就做好了</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/readbook/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -608,7 +755,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
